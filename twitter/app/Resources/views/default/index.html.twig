@@ -6,18 +6,11 @@
     {%  endblock %}
 
     {% block content %}
-        <ul>
-            {%  for index, day in days %}
-                <li>{{ index }}: {{ day }}</li>
-            {% endfor %}
-        </ul>
-
-        <P>{{ html }}</P>
-        <p>{{ html | replace({ "n'est pas": "est" }) | raw }}</p>
 
     {% endblock %}
 
     {%  block footer %}
         {{ parent() }}
-        <a href="{{  path('app_twig_test') }}">Lien vers la page Twig Test</a>
+        <a href="{{  path('app_twig_test') }}">Lien vers la page Twig Test</a><br/>
+        <a href="{{  path('app_tweet_list') }}">Lien vers la page tweet</a>
     {%  endblock %}
