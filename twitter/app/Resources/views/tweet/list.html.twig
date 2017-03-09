@@ -15,6 +15,9 @@
         {% else %}
             Aucun tweet
         {% endfor %}
+
+        <a href="{{ path('app_new_tweet') }}">+ New Tweet</a><br/>
+
     {% endblock %}
 
     {%  block footer %}
