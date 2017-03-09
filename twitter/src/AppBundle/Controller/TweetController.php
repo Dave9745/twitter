@@ -41,7 +41,7 @@ class TweetController extends Controller
      */
 
     public function newTweetaction(Request $request){
-        
+        //form
         $form = $this->createForm(TweetType::class, new Tweet());
         $form->handleRequest($request);
 
