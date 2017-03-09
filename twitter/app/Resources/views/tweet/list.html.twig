@@ -1,0 +1,23 @@
+{%  extends "::base.html.twig" %}
+    {%  block title 'List' %}
+
+    {%  block header %}
+        <h1>Here is your list...</h1>
+    {%  endblock %}
+
+    {% block content %}
+        {% for tweet in tweets %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{{ path('app_tweet_detail', {id:tweet.id}) }}">{{ tweet.message }}</a><br/>
+                </div>
+            </div>
+        {% else %}
+            Aucun tweet
+        {% endfor %}
+    {% endblock %}
+
+    {%  block footer %}
+        {{ parent() }}
+        blabla
+    {%  endblock %}

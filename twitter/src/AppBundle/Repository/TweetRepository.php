@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class TweetRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function recupTweet($id)
+    {
+        return $this->createQueryBuilder('i')
+                    ->select('i')
+                    ->andWhere('i.id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+
+    }
 }
