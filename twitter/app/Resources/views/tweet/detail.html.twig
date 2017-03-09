@@ -1,0 +1,26 @@
+{%  extends "::base.html.twig" %}
+    {%  block title 'Detail' %}
+
+    {%  block header %}
+        <h1>Detail of this tweet</h1>
+    {%  endblock %}
+
+    {% block content %}
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <b>{{ tweet.message }}</b> <br />
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body" style="background-color: grey">
+                Posté le: {{ tweet.createdAt|date('d/m/Y H:m:s') }}
+            </div>
+        </div>
+
+    {% endblock %}
+
+    {%  block footer %}
+        {{ parent() }}
+        blabla
+    {%  endblock %}
