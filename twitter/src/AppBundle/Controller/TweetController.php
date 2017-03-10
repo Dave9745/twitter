@@ -26,7 +26,8 @@ class TweetController extends Controller
         if($form->isSubmitted() && $form->isValid()){
 
             $tweet = $form->getData();
-            $save = $this->container->get('app.tweet.manager')->saveTweet($tweet);
+            $this->container->get('app.tweet.manager')->saveTweet($tweet);
+            $this->container->get('app.tweet.messenger')->sendTweetCreated();
 
             return $this->redirectToRoute('app_tweet_list');
         }
