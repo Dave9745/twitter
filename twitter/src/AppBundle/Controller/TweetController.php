@@ -12,7 +12,7 @@ class TweetController extends Controller
 {
 
     /**
-     * @Route("/tweet/new", name="app_new_tweet", methods={"GET", "POST"})
+     * @Route("/tweets/new", name="app_new_tweet", methods={"GET", "POST"})
      */
 
     public function newTweetaction(Request $request){
@@ -45,5 +45,15 @@ class TweetController extends Controller
 
     }
 
-
+    /**
+     * @Route("/tweet/{id}", name="app_tweet_detail")
+     */
+    public function detailAction($id)
+    {
+        $tweet = $this->getDoctrine()->getRepository(Tweet::class)->recupTweet($id);
+        if(!$tweet instanceof Tweet){
+            throw $this->createNotFoundException(sprintf('Le tweet n° %d n\'existe pas', $id));
+        }
+        return $this->render(':tweet:detail.html.twig', ['tweet' =>  $tweet,]);
+    }
 }

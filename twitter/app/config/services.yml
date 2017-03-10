@@ -10,4 +10,4 @@ services:
                - "@=service('doctrine').getManager()"
                - "%app.tweet.mb_last%"
 
-    
+
