@@ -20,4 +20,15 @@ class TweetRepository extends \Doctrine\ORM\EntityRepository
                     ->getOneOrNullResult();
 
     }
+
+    public function getLastsTweets($maxResults = 10){
+
+        return $this->createQueryBuilder('t')
+            ->select('t')
+            ->orderBy('t.createdAt', 'DESC')
+            ->setMaxResults($maxResults)
+            ->getQuery()
+            ->getResult();
+
+    }
 }

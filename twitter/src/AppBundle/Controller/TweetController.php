@@ -10,47 +10,23 @@ use AppBundle\Entity\Tweet;
 
 class TweetController extends Controller
 {
-    /**
-     * @Route("/", name="app_tweet_list")
-     */
-    public function listAction()
-    {
-        $tweets = $this->getDoctrine()->getRepository(Tweet::class)->findAll();
-
-        return $this->render(':tweet:list.html.twig', ['tweets' => $tweets,]);
-    }
-
-    /**
-     * @Route("/tweet/{id}", name="app_tweet_detail")
-     */
-
-    public function detailAction($id)
-    {
-        $tweet = $this->getDoctrine()->getRepository(Tweet::class)->recupTweet($id);
-
-        if(!$tweet instanceof Tweet){
-            throw $this->createNotFoundException(sprintf('Le tweet n° %d n\'existe pas', $id));
-        }
-
-        return $this->render(':tweet:detail.html.twig', ['tweet' =>  $tweet,]);
-
-    }
 
     /**
      * @Route("/tweet/new", name="app_new_tweet", methods={"GET", "POST"})
      */
 
     public function newTweetaction(Request $request){
-        //form
-        $form = $this->createForm(TweetType::class, new Tweet());
+
+        $tweet = $this->container->get('app.tweet.manager')->createTweet();
+
+        //créer et enregistrer un nouveau tweet
+        $form = $this->createForm(TweetType::class, $tweet);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $tweet = $form->getData();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tweet);
-            $em->flush();
+            $tweet = $form->getData();
+            $save = $this->container->get('app.tweet.manager')->saveTweet($tweet);
 
             return $this->redirectToRoute('app_tweet_list');
         }
@@ -58,17 +34,16 @@ class TweetController extends Controller
         return $this->render(':tweet:newTweet.html.twig', ['form' => $form->createView(),]);
     }
 
-    /*/**
-     * @Route("/tweet/{id}", name="app_tweet_detail")
+    /**
+     * @Route("/", name="app_tweet_list")
      */
-    /*public function getLastTweets($maxResults = 10){
+    public function getLastTweets($maxResults = 10){
 
-        return $this->createQueryBuilder('t')
-                    ->select('t')
-                    ->orderBy('t.createAt', 'DESC')
-                    ->setMaxResults($maxResults)
-                    ->getQuery()
-                    ->getResult();
+        $tweets = $this->container->get('app.tweet.manager')->getLastsTweets();
 
-    }*/
+        return $this->render(':tweet:list.html.twig', ['tweets' => $tweets,]);
+
+    }
+
+
 }

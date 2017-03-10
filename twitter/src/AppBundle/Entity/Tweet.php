@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tweet
@@ -23,7 +24,13 @@ class Tweet
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="This item must not be empty")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(name="message", type="string", length=160)
      */
     private $message;
